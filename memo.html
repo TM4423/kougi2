@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Replace Showcase</title>
+    <script src="js/jquery-2.1.3.min.js"></script>
+    <link rel="stylesheet" href="css/sample.css">
+    <script>
+        const key = 'ジーズアカデミー';
+        const value = '世界を変えるGEEKの集団';
+        localStorage.setItem(key, value);
+    </script>
+</head>
+
+<body>
+    <header>
+        <h1>浅川助教授の　悩みのメモ帳</h1>
+    </header>
+    <main style="display: none;">
+        <!--入力エリア-->
+        <textarea name="" id="sentense" cols="30" rows="30">ジーズアカデミー</textarea>
+        <ul>
+            <li id='execute'>変換する</li>
+    </main>
+    <h2>変換結果</h2>
+    <div id="replaced_area">
+        <!-- ここに追加データが挿入される -->
+    </div>
+    <div>
+        <dl id="annotation"></dl>
+    </div>
+
+    <!------------------------------------------------------------------------->
+
+    <script>
+    $('main').slideDown(1000);
+    $('#suggestedItems').slideDown(1000);
+    $('table').fadeIn(5000);
+
+    // 1.変換ボタンを押したら
+    $('#execute').on('click', function () {
+        const str = $('#sentense').val();
+        const cr_replaced = str.replace(/\n/g,'<br>');
+
+        // 2.テキストエリアを取り込む
+        let annotation = '<h3>用語の解説</h3>';
+        let word_replaced = cr_replaced;
+        for (i=0; i<localStorage.length; i++) {
+            const key = localStorage.key(i);
+            const value = localStorage.getItem(key);
+            const reg = new RegExp(`${key}`,'g');
+            word_replaced = word_replaced.replace(reg,`<a href='#anno${i}'>${key}</a>`);
+            const result = word_replaced.match(reg);
+            if (result) {
+                annotation += `<dt id='anno${i}'>${key}</dt><dd>${value}</dd>`;
+            }
+        }
+        $('#replaced_area').html(word_replaced);
+        $('#annotation').html(annotation);
+    });
+
+
+
+    </script>
+    <footer><small>G's</small>　<a href="./help/help.html">help</a></footer>
+</body>
+
+</html>
