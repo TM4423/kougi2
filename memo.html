@@ -9,7 +9,7 @@
     <script>
         const key = 'ジーズアカデミー';
         const value = '世界を変えるGEEKの集団';
-        localStorage.setItem(key, value);
+        localStorage.setItem(key, value);    //localStrageのセット方法
     </script>
 </head>
 
@@ -18,14 +18,14 @@
         <h1>浅川助教授の　悩みのメモ帳</h1>
     </header>
     <main style="display: none;">
-        <!--入力エリア-->
+        <!--入力エリア textareaのcols、rowsが、うまく反映しない-->
         <textarea name="" id="sentense" cols="30" rows="30">ジーズアカデミー</textarea>
         <ul>
-            <li id='execute'>変換する</li>
+            <li id='execute'>変換する</li>   <!-- transform の方が良かったな -->
     </main>
     <h2>変換結果</h2>
     <div id="replaced_area">
-        <!-- ここに追加データが挿入される -->
+        <!-- ここに変換した結果データが挿入される -->
     </div>
     <div>
         <dl id="annotation"></dl>
@@ -34,36 +34,43 @@
     <!------------------------------------------------------------------------->
 
     <script>
-    $('main').slideDown(1000);
+    $('main').slideDown(1000);  // ゆっくりスライドダウンさせて表示など
     $('#suggestedItems').slideDown(1000);
     $('table').fadeIn(5000);
 
     // 1.変換ボタンを押したら
     $('#execute').on('click', function () {
+        // 2.テキストエリアを取り込み
         const str = $('#sentense').val();
         const cr_replaced = str.replace(/\n/g,'<br>');
 
-        // 2.テキストエリアを取り込む
+        // 3.解説準備
         let annotation = '<h3>用語の解説</h3>';
+        // 4.変換準備
         let word_replaced = cr_replaced;
+        // 5.locarStrageの配列個数で、ループを回す
         for (i=0; i<localStorage.length; i++) {
             const key = localStorage.key(i);
             const value = localStorage.getItem(key);
+            // 6.正規表現で置換する
             const reg = new RegExp(`${key}`,'g');
             word_replaced = word_replaced.replace(reg,`<a href='#anno${i}'>${key}</a>`);
             const result = word_replaced.match(reg);
+            // 7.置換(match)の事実があった(result === true)ら、解説を書き出す
             if (result) {
                 annotation += `<dt id='anno${i}'>${key}</dt><dd>${value}</dd>`;
             }
         }
+        // 8.ソース（引用文）を書き換える
         $('#replaced_area').html(word_replaced);
+        // 9.ソース（解説部分）を書き換える
         $('#annotation').html(annotation);
     });
 
 
 
     </script>
-    <footer><small>G's</small>　<a href="./help/help.html">help</a></footer>
+    <footer><small>G's</small>　<a href="./help/usage.html">usage</a></footer>
 </body>
 
 </html>
