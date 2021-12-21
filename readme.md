@@ -8,7 +8,7 @@
 - memo.html
   - 索引から自動リンクを生成するかのようなメモアプリを作ってみました。 
   - memo.html を開いた時点では、 localStrage には、索引情報が一つだけ入っています（ジーズアカデミー）。
-    - 画面下のリンク（/usage/usage.html)を開くと、 localStrage に新たな key と value を設定します。この localStrage を、索引として使えるようにします。
+    - 画面下のリンク（/help/usage.html)を開くと、 localStrage に新たな key と value を設定します。この localStrage を、索引として使えるようにします。
     - memo.htmlのテキストボックスに書いた文章の中に、localStrageにある単語が出現した時、その単語を<a></a>タグで囲って、書き換えます。
   - tohoku_u.asakawa.txt はぜひ、ご覧ください。
 # ★頑張ったこと・こだわった点
